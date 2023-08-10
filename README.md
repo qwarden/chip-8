@@ -14,10 +14,10 @@ bin/chip-8 programs/wait_for_key.bin
 ```
 
 There is currently one example program attached but I plan on working on
-more in the future including a pong game. 
+more in the future including a pong implementation. 
 
-## chex.py
-chex.py is a simple python script in the `programs` directory which will convert 
-an ASCII text file containing hex characters and python style comments into raw 
-hex bytes. This allows for primative editing of chip-8 programs until I get around 
-to writing an assembler.
+## hexc.py
+hexc.py (which is short for hex commented) is a simple python script in the `programs` 
+directory which will convert an ASCII text file containing hex characters and python 
+style comments into raw hex bytes. This allows for primative editing of chip-8 programs 
+until I get around to writing an assembler.
