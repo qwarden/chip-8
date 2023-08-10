@@ -16,7 +16,7 @@
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define NUM_CHARS 80
-#define NUM_KEYS 0x10
+#define NUM_KEYS 0x10 
 
 #define DEBUG 0
 

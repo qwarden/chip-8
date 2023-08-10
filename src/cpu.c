@@ -122,43 +122,6 @@ void load_mem(CPU *c, uint8_t *data, uint16_t loc, size_t n) {
   memcpy(c->memory + MEM_START + loc, data, n);
 }
 
-size_t open_with_size(FILE *file, const char *filename) {
-  file = fopen(filename, "rb");
-
-  if (file == NULL) {
-    fprintf(stderr, "ERROR: failed to open file %s: %s\n", filename,
-            strerror(errno));
-    exit(1);
-  }
-
-  fseek(file, 0, SEEK_END);
-  size_t size = ftell(file);
-  fseek(file, 0, SEEK_SET);
-
-  return size;
-}
-
-uint8_t *read_into_buff(FILE *file, size_t size) {
-  uint8_t *buff = (uint8_t *)malloc(size);
-
-  if (buff == NULL) {
-    fprintf(stderr, "ERROR: Failed to allocate buffer.\n");
-    fclose(file);
-    exit(1);
-  }
-
-  size_t size_read = fread(buff, 1, size, file);
-  fclose(file);
-
-  if (size_read != size) {
-    fprintf(stderr, "ERROR: failed to read file %s", strerror(errno));
-    free(buff);
-    exit(1);
-  }
-
-  return buff;
-}
-
 void print_regs(CPU *c) {
   for (int i = 0; i < NUM_REGS; ++i)
     printf("reg 0x%x: 0x%x\n", i, c->regs[i]);
@@ -189,4 +152,40 @@ void print_screen(CPU *c) {
     }
     printf("\n");
   }
+}
+
+size_t read_file_into_buff(char *filename, uint8_t *buff) {
+  FILE *file = fopen(filename, "rb");
+
+  if (file == NULL) {
+    fprintf(stderr, "ERROR: failed to open file %s: %s\n", filename,
+            strerror(errno));
+    exit(1);
+  }
+
+  fseek(file, 0, SEEK_END);
+  size_t size = ftell(file);
+  fseek(file, 0, SEEK_SET);
+
+  if (MEM_START + size > MEM_SIZE) {
+    fprintf(stderr, "ERROR: file is too large\n");
+    exit(1);
+  }
+
+  if (buff == NULL) {
+    fprintf(stderr, "ERROR: buffer is NULL\n");
+    fclose(file);
+    exit(1);
+  }
+
+  size_t size_read = fread(buff, 1, size, file);
+  fclose(file);
+
+  if (size_read != size) {
+    fprintf(stderr, "ERROR: failed to read file %s: %s", filename,
+            strerror(errno));
+    exit(1);
+  }
+
+  return size;
 }

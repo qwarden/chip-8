@@ -79,4 +79,6 @@ void print_regs(CPU* c);
 void print_memory(CPU* c, uint16_t addr);
 void print_screen(CPU* c);
 
+size_t read_file_into_buff(char *filename, uint8_t *buff);
+
 #endif // _CPU_H_
