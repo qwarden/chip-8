@@ -1,0 +1,13 @@
+1MAIN
+
+DATA:
+  C0C0C0C0
+
+MAIN:
+  6000
+  7001
+  1NEXT
+
+NEXT:
+  7001
+  
